@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/utils/db";
 import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
+import jwt  from "jsonwebtoken";
 
 export async function POST(req: Request) {
+  const JWT_SECRET = process.env.JWT_SECRET!;
   try {
     await dbConnect();
 
@@ -44,11 +46,16 @@ export async function POST(req: Request) {
       password: hashedPassword,
     });
 
+    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
     // Return user without password
     const userResponse = {
       _id: user._id,
       name: user.name,
       email: user.email,
+      token: token
     };
 
     return NextResponse.json(

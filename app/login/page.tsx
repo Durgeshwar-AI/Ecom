@@ -56,7 +56,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -78,6 +78,8 @@ export default function LoginPage() {
           email: data.user.email,
         })
       );
+
+      localStorage.setItem("token", data.user.token);
 
       // Redirect to home or dashboard
       router.push("/");

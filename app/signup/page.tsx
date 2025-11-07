@@ -66,7 +66,7 @@ export default function SignupPage() {
     setError("");
 
     try {
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -89,6 +89,8 @@ export default function SignupPage() {
           email: data.user.email,
         })
       );
+
+      localStorage.setItem("token", data.user.token);
 
       // Redirect to home or dashboard
       router.push("/");
@@ -121,7 +123,7 @@ export default function SignupPage() {
           )}
 
           {/* Signup Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 text-black">
             {/* Name Field */}
             <div>
               <label

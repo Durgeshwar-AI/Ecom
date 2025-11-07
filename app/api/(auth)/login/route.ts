@@ -35,13 +35,7 @@ export async function POST(req: Request) {
     );
 
     // ✅ Set token as HTTP-only cookie
-    const res = NextResponse.json({ message: "Login successful", user: { name: user.name, email: user.email } });
-    res.cookies.set("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60,
-      path: "/",
-    });
+    const res = NextResponse.json({ message: "Login successful", user: { name: user.name, email: user.email, token } });
 
     return res;
   } catch (err: any) {

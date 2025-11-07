@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoggedIn } = useAppSelector((state) => state.user);
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -35,11 +37,13 @@ const Navbar = () => {
               Cart
             </Link>
 
-            <Link href="/signup">
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium cursor-pointer">
-                Sign Up
-              </button>
-            </Link>
+            {!isLoggedIn && (
+              <Link href="/signup">
+                <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium cursor-pointer">
+                  Sign Up
+                </button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -73,11 +77,13 @@ const Navbar = () => {
               Cart
             </Link>
 
-            <Link href="/signup" onClick={() => setIsOpen(false)}>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium cursor-pointer">
-                Sign Up
-              </button>
-            </Link>
+            {!isLoggedIn && (
+              <Link href="/signup" onClick={() => setIsOpen(false)}>
+                <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium cursor-pointer">
+                  Sign Up
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       )}
